@@ -1,11 +1,80 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Multiplayer Game</title>
+
+  <style>
+    #screen {
+      border: 10px solid #ccc;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      image-rendering: -moz-crisp-edges;
+
+      width: 400px;
+      height: 400px;
+    }
+  </style>
 </head>
 <body>
-  <canvas id="canvas" width="500" height="500" ></canvas>
-  
+  <canvas id="screen" width="10" height="10"></canvas>
+  <script>
+    const screen = document.getElementById('screen')
+
+    /** @type {CanvasRenderingContext2D} */
+    const context = screen.getContext('2d')
+    const currentPlayer = 'player1'
+
+    const game = {
+      players: {
+        'player1': {x: 1, y: 1},
+        'player2': {x: 9, y: 9}
+      },
+      fruits: {
+        'fruit1': {x: 3, y: 3},
+      }
+    }
+
+    document.addEventListener('keydown', handleKeydown)
+
+    function handleKeydown(event) {
+      const keyPressed = event.key
+      const player = game.players[currentPlayer]
+
+      if (keyPressed === 'ArrowUp' && player.y - 1 >= 0 ) {
+        player.y--
+      }
+      if (keyPressed === 'ArrowDown' && player.y + 1 < screen.height) {
+        player.y++
+      }
+      if (keyPressed === 'ArrowLeft' && player.x - 1 >= 0) {
+        player.x--
+      }
+      if (keyPressed === 'ArrowRight' && player.x + 1 < screen.width) {
+        player.x++
+      }
+    }
+
+    renderScreen()
+
+    function renderScreen() {
+      context.fillStyle = '#fff'
+      context.clearRect(0, 0, 10, 10)
+
+      for (const playerId in game.players) {
+        const player = game.players[playerId]
+        context.fillStyle = '#000'
+        context.fillRect(player.x, player.y, 1, 1)
+      }
+
+      for (const fruitId in game.fruits) {
+        const player = game.fruits[fruitId]
+        context.fillStyle = '#0f0'
+        context.fillRect(player.x, player.y, 1, 1)
+      }
+      
+      requestAnimationFrame(renderScreen)
+    }
+
+  </script>
 </body>
 </html>
