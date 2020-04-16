@@ -11,8 +11,8 @@ Dá uma olhada nessa [playlist](https://www.youtube.com/watch?v=0sTfIZvjYJk&list
 - Separation of Concerns
 - e mais umas paradas aí
 
-## Na verdade
-Do jeito que esse repositório está hoje, nem dá pra chamar de jogo porque nem tem sistema de pontuação. Então vão aí algumas funcionalidades a mais pra serem implementadas:
+## Na verdade...
+do jeito que esse repositório está hoje, nem dá pra chamar de jogo porque nem tem sistema de pontuação. Então vão aí algumas funcionalidades a mais pra serem implementadas:
 - Sistema de pontuação
 - Limite de pontos
 - Fazer barulhinho quando pegar a fruta 
