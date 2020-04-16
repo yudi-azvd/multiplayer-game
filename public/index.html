@@ -72,6 +72,11 @@
 
       const screen2 = document.getElementById('screen2')
       const context2 = screen2.getContext('2d')
+
+      // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Pixel_manipulation_with_canvas
+      // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/putImageData
+      /* Pensando bem, talvez não seja uma boa copiar _todo_ o canvas a cada modificação
+      Algumas coisas no canvas não mudam, então não precisam ser atualizadas */
       console.log(context.getImageData(0, 0, 10, 10))
       context2.putImageData(context.getImageData(0, 0, 10, 10), 0, 0)
 
