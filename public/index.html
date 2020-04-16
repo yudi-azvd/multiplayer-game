@@ -4,7 +4,7 @@
   <title>Multiplayer Game</title>
 
   <style>
-    #screen {
+    #screen, #screen2 {
       border: 10px solid #ccc;
       image-rendering: pixelated;
       image-rendering: crisp-edges;
@@ -18,6 +18,8 @@
 </head>
 <body>
   <canvas id="screen" width="10" height="10"></canvas>
+  
+  <canvas id="screen2" width="10" height="10"></canvas>
 
   <!-- 
     Um bloco de script pra importar um módulo
@@ -32,7 +34,12 @@
     const keyboardListener = createKeyboardListener(document)
 
     const screen = document.getElementById('screen')
+    const context = screen.getContext('2d')
+    console.log(context.getImageData(0, 0, 10, 10))
 
+
+    // const s = document.getElementById('2s')
+    // console.log(screen.)
     const socket = io()
 
     socket.on('connect', (state) => {
@@ -62,6 +69,12 @@
     
     socket.on('move-player', command => {
       const playerId = socket.id
+
+      const screen2 = document.getElementById('screen2')
+      const context2 = screen2.getContext('2d')
+      console.log(context.getImageData(0, 0, 10, 10))
+      context2.putImageData(context.getImageData(0, 0, 10, 10), 0, 0)
+
 
       if (command.playerId !== playerId) {
         game.movePlayer(command)
