@@ -111,13 +111,14 @@
       const player = game.state.players[playerId]
       const playerScore = document.getElementById('playerScore')
       
-      // não parece muito seguro
+      // não parece muito seguro: comparação direta com elemento da DOM
       if (playerScore.innerText !== String(player.score)) {
         console.log( 'DIFF', playerScore.innerText, player.score)
         playerScore.innerText = player.score
 
         // desse jeito não há tracking INDIVIDUAL de pontos
         // score não é necessariamente incrementado em 1
+        // outro jeito: os dois números são de centenas diferentes?
         player.score % 100 === 0 ? collect100.play(): collect.play()
       }
       
