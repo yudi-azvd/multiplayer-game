@@ -30,8 +30,8 @@ sockets.on('connection', (socket) => {
   socket.emit('setup', game.state)
   // socketS.emit('setup', game.state) atualizaria TODOS os soquetes
 
-  console.table(game.state.players)
-  console.log(Object.keys(sockets.sockets.sockets).length)
+  // console.table(game.state.players)
+  // console.log(Object.keys(sockets.sockets.sockets).length)
   
   socket.on('disconnect', () => {
     game.removePlayer({playerId})
@@ -44,11 +44,6 @@ sockets.on('connection', (socket) => {
     game.movePlayer(command)
   })
 })
-
-// setInterval(() => {
-//   console.table(game.state.players)
-//   console.log(Object.keys(sockets.sockets.sockets).length)
-// }, 1000);
 
 server.listen(3000, () => {
   console.log('ta rodando !')
