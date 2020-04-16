@@ -41,9 +41,16 @@ sockets.on('connection', (socket) => {
     command.playerId = playerId
     command.type = 'move-player'
 
+    console.log('> Move player')
+
     game.movePlayer(command)
   })
 })
+
+setInterval(() => {
+  console.clear()
+  console.table(game.state.players)
+}, 1000);
 
 server.listen(3000, () => {
   console.log('ta rodando !')

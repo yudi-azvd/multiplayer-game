@@ -4,6 +4,9 @@
   <img align="center" src="/.github/multiplayer-game.gif" alt="multiplayer game gif" width="400">
 </p>
 
+## Node
+Esse projeto usa a versão 13.13 do Node.js
+
 ## Inspiração
 Dá uma olhada nessa [playlist](https://www.youtube.com/watch?v=0sTfIZvjYJk&list=PLMdYygf53DP5SVQQrkKCVWDS0TwYLVitL) do [Filipe Deschamps](https://github.com/filipedeschamps/meu-primeiro-jogo-multiplayer) que você vai ter uma ideia de como implementar o jogo.
 
