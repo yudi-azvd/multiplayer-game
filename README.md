@@ -1,6 +1,8 @@
-# Multiplayer Game
+<h1 align="center" >Multiplayer Game</h1>
 
-<img align="center" src="/.github/multiplayer-game.gif" alt="multiplayer game gif" width="300">
+<p align="center">
+  <img align="center" src="/.github/multiplayer-game.gif" alt="multiplayer game gif" width="400">
+</p>
 
 ## Inspiração
 Dá uma olhada nessa [playlist](https://www.youtube.com/watch?v=0sTfIZvjYJk&list=PLMdYygf53DP5SVQQrkKCVWDS0TwYLVitL) do [Filipe Deschamps](https://github.com/filipedeschamps/meu-primeiro-jogo-multiplayer) que você vai ter uma ideia de como implementar o jogo.
