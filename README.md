@@ -10,7 +10,7 @@ Esse projeto usa a versão 13.13 do Node.js, mais especificamente as funcionalid
 
 ## Minha implementação
 
-### Regras
+### 📏 Regras
 - acho que só tem uma: faça a maior quantidade de pontos
 (Sim, meio tosco mesmo. Mas por enquanto é só isso mesmo.)
 
