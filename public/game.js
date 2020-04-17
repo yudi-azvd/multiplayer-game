@@ -17,6 +17,7 @@ export default function createGame() {
     setInterval(addFruit, period);
   }
 
+  // Adicionar inscrição por tópico
   function subscribe(obserFunction) {
     observers.push(obserFunction)
   }
@@ -58,6 +59,23 @@ export default function createGame() {
     notifyAll({
       type: 'remove-player',
       playerId,
+    })
+  }
+
+  function updatePlayerScore(command) {
+    const playerId = command.playerId
+    const ammount = 1
+    const previousScore = state.players[playerId].score
+    state.players[playerId].score += ammount 
+    const score = state.players[playerId].score
+
+    // deveria mandar também o playerId?
+    notifyAll({
+      type: 'update-score',
+      players: state.players,
+      playerId,
+      previousScore,
+      score,
     })
   }
 
@@ -116,8 +134,9 @@ export default function createGame() {
       },
     }
 
+    const playerId = command.playerId
     const keyPressed = command.keyPressed
-    const player = state.players[command.playerId]
+    const player = state.players[playerId]
     const moveFunction = acceptedMoves[keyPressed]
 
     /* pode vir um moviemnto que se refere a um jogador 
@@ -125,17 +144,19 @@ export default function createGame() {
     código */
     if (player && moveFunction) {
       moveFunction(player)
-      checkForFruitCollision(player)
+      checkForFruitCollision(playerId)
     }
   }
   
-  function checkForFruitCollision(player) {
+  function checkForFruitCollision(playerId) {
+    const player = state.players[playerId]
+
     for (const fruitId in state.fruits) {
       const fruit = state.fruits [fruitId]
 
       if (player.x === fruit.x && player.y === fruit.y) {
         removeFruit({ fruitId })
-        player.score++
+        updatePlayerScore({playerId})
       }
     }
 
@@ -148,6 +169,7 @@ export default function createGame() {
     movePlayer,
     addPlayer,
     removePlayer,
+    updatePlayerScore,
     addFruit,
     removeFruit,
     subscribe,

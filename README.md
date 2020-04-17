@@ -16,8 +16,11 @@ Dá uma olhada nessa [playlist](https://www.youtube.com/watch?v=0sTfIZvjYJk&list
 - Separation of Concerns
 - e mais umas paradas aí
 
-## Na verdade...
-do jeito que esse repositório está hoje, nem dá pra chamar de jogo porque nem tem sistema de pontuação. Então vão aí algumas funcionalidades a mais pra serem implementadas:
-- Sistema de pontuação
+### Bugs
+- Quando o servidor é reiniciado devido a alguma alteração no código, o jogador se move "duplicadamente" ou "triplamente" dependendo do número de vezes que o servidor foi reiniciado.
+- Às vezes o placar dos clientes podem ficar desatualizados com o placar que está no servidor. É mais fácil observar isso acontecer com mais de três clientes.
+
+### A fazer
+- Sistema de pontuação (corrigir)
 - Limite de pontos
-- Fazer barulhinho quando pegar a fruta 
+- Verificar desconexão de socket

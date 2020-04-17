@@ -6,6 +6,10 @@
 
   <style>
 
+    body {
+      background: #fefefe;
+    }
+
     .container {
       display: flex;
       justify-content: center;
@@ -22,11 +26,19 @@
       margin-right: 5px;
     }
 
-    #info {
+    #ranking {
       width: 200px;
       display: block;
-      padding: 5px;
+      padding: 2px;
       border: 2px dashed #ccc;
+    }
+
+    #ranking .currentPlayer {
+      color: #f0db4f;
+    }
+
+    #ranking span {
+      font-family: monospace;
     }
 
   </style>
@@ -36,13 +48,7 @@
 
   <div class="container">
     <canvas id="screen" width="10" height="10"></canvas>
-    <div id="info">
-      <p>
-        Your id: <span id="playerId"></span>
-      </p>  
-      <p>
-        Score: <span id="playerScore">0</span>
-      </p>  
+    <div id="ranking">
     </div>
   </div>
 
@@ -54,30 +60,35 @@
     import createGame from './game.js'
     import createKeyboardListener from './keyboardListener.js'
     import renderScreen from './screen.js'
+    import createRanking from './ranking.js'
 
     const collect = new Audio('./collect.mp3')
     const collect100 = new Audio('./100-collect.mp3')
 
     const game = createGame()
     const keyboardListener = createKeyboardListener(document)
-
+    let ranking = null
+    let currentPlayerId = null
     const socket = io()
 
     socket.on('connect', (state) => {
-      const playerId = socket.id
-      console.log(`Current Player: ${playerId}`)
+      currentPlayerId = socket.id
+      console.log(`Current Player: ${currentPlayerId}`)
       
-      const score = document.getElementById('playerId')
-      score.innerText = playerId
+      // const score = document.getElementById('playerId')
+      // score.innerText = playerId
 
       const screen = document.getElementById('screen')
-      renderScreen(screen, game, requestAnimationFrame, playerId)
+      renderScreen(screen, game, requestAnimationFrame, currentPlayerId)
     })
 
     socket.on('setup', state => {
       const playerId = socket.id
       game.setState(state)
 
+      ranking = createRanking(playerId, document)
+
+      game.subscribe(ranking.update)
       keyboardListener.registerPlayerId(playerId)
       keyboardListener.subscribe(game.movePlayer)
       keyboardListener.subscribe(command => {
@@ -95,7 +106,7 @@
     
     socket.on('move-player', command => {
       const playerId = socket.id
-      console.log(`Receiving ${command.type} -> ${command.playerId}`)
+      // console.log(`Receiving ${command.type} -> ${command.playerId}`)
 
       if (command.playerId !== playerId) {
         game.movePlayer(command)
@@ -107,24 +118,35 @@
     })
     
     socket.on('remove-fruit', command => {
-      const playerId = socket.id
-      const player = game.state.players[playerId]
-      const playerScore = document.getElementById('playerScore')
-      
-      // não parece muito seguro: comparação direta com elemento da DOM
-      if (playerScore.innerText !== String(player.score)) {
-        console.log( 'DIFF', playerScore.innerText, player.score)
-        playerScore.innerText = player.score
-
-        // desse jeito não há tracking INDIVIDUAL de pontos
-        // score não é necessariamente incrementado em 1
-        // outro jeito: os dois números são de centenas diferentes?
-        player.score % 100 === 0 ? collect100.play(): collect.play()
-      }
-      
-      console.log('Receiving remove-fruit', command.fruitId, playerId)
-
+      // console.log('Receiving remove-fruit', command.fruitId)
       game.removeFruit(command)
+    })
+    
+    // IDEIA: entidade Score como observer?
+    socket.on('update-score', command => {
+      const player = game.state.players[currentPlayerId]
+      const playerScore = player.score
+      const rankingDiv = document.getElementById('ranking')
+
+      const { previousScore, score } = command 
+
+      if (previousScore !== score && command.playerId === currentPlayerId ) {
+        score % 100 === 0 ? collect100.play() : collect.play()
+      }
+
+      rankingDiv.innerHTML = ''
+      rankingDiv.appendChild(ranking.getDomRanking())
+
+      // não parece muito seguro: comparação direta com elemento da DOM
+      // if (playerScore.innerText !== String(player.score)) {
+      //   // console.log( 'DIFF', playerScore.innerText, player.score)
+      //   playerScore.innerText = player.score
+
+      //   // outro jeito: os dois números são de centenas diferentes?
+      //   player.score % 100 === 0 ? collect100.play(): collect.play()
+      // }
+      
+      // console.log(`Receiving update score`, command.score-command.previousScore)
     })
     
   </script>
