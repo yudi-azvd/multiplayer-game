@@ -12,7 +12,7 @@ Esse projeto usa a versão 13.13 do Node.js, mais especificamente as funcionalid
 
 ### 📏 Regras
 - acho que só tem uma: faça a maior quantidade de pontos
-(Sim, meio tosco mesmo. Mas por enquanto é só isso mesmo.)
+(Sim, meio tosco mesmo. Mas por enquanto é só isso.)
 
 ### 🕷 Bugs
 - Quando o servidor é reiniciado devido a alguma alteração no código, o jogador se move "duplicadamente" ou "triplamente" dependendo do número de vezes que o servidor foi reiniciado.
